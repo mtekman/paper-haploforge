@@ -1,0 +1,24 @@
+
+* Author Query edits
+
+** TODO Check edits [7/9] [77%]:
+ - [X] AQ1 :: title lowercase
+ - [X] AQ2 :: Please check that all names have been spelled correctly and appear in the correct order. Please also check that all initials are present. Please check that the author surnames (family name) have been correctly identified by a pink background. If this is incorrect, please identify the full surname of the relevant authors. Occasionally, the distinction between surnames and forenames can be ambiguous, and this is to ensure that the authors’ full surnames and forenames are tagged correctly, for accurate indexing online. Please also check all author affiliations.
+ - [ ] AQ3 :: Please provide department/division name for affiliation ‘2’. :ALAN:
+ - [X] AQ4 :: Please check and confirm ‘Availability and implementation’ section.
+ - [X] AQ5 :: Figure has been placed as close as possible to its first mention in text. Please check that the figures are accurately placed in the text that the images are correct and that they have the correct caption and citation.
+ - [X] AQ6 :: Please check the accuracy of special characters, equations, dosages and units if applicable.
+ - [?] AQ7 :: Please check whether the supplementary citation is OK as set.
+ - [-] AQ8 :: Please note, colour figures in print will be charged £350/$600 per figure. Colour figures online will not be charged. Please confirm which figures should be printed in colour and reword the legend/text to avoid using reference to colour if the figures are to be printed in black and white.
+   What needs colour [3/8]:
+   + [X] Fig1 :: Shows IBD as distinct colours, needs colour
+   + [ ] Fig2 :: Does not need colour, need to change the caption
+   + [ ] Fig3 :: Does not need colour
+   + [ ] Fig4 :: Does not need colour
+   + [X] Fig5 :: IBD, needs colour to illustrate how it works
+   + [X] Fig6 :: IBD, again needs colour
+   + [ ] Fig7 :: Highlights an overlay only, does not need colour
+   + [ ] Fig8 :: Colours are not the same between lists anyhow, does not need colour
+ - [X] AQ9 :: As per the style, the heading ‘Methods’ has been changed to ‘Materials and methods’. Please check and confirm.
+ - [E] AQ10 :: Is the word “Cyrllic” spelt correct. Please check and correct if necessary.
+ - [X] AQ11 :: Please check and confirm the edit made in ‘Funding’ section

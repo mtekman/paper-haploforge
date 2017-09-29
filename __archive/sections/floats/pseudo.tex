@@ -1,0 +1,51 @@
+
+% Pseudocode
+\begin{algorithm}[!tb]
+\label{alg:astar}
+\SetLine\
+
+\Begin{
+prefetch relevant chromosome
+
+\textit{maxPath} $\leftarrow$ global max. num. of paths to explore
+
+\textit{numMark} $\leftarrow$ total num. markers in chromosome
+
+\textit{P} $\leftarrow$ parental exclusion set of illegal colours
+
+\textit{complete} $\leftarrow$ initialise empty list of completed paths.
+
+\textit{frontier} $\leftarrow$ array of working paths, initialised with array of colours at first marker-layer in chromosome as starting points
+
+\While{frontier > 0}{
+
+   sort \textit{frontier} by desc. length and select first \textit{maxPath}
+   
+   \textit{a} $\leftarrow$ shift \textit{frontier} to select first active path
+
+   \textit{C} $\leftarrow$ colours in path \textit{a} at marker-layer length \textit{a} - 1
+     
+   \For{c $\in$ C}{
+           
+      \textit{s} $\leftarrow$ perform lookahead and count contiguous stretch of \textit{c}
+      
+      \lIf{s < 1 or c $\in$ P}{skip \textit{c}}
+           
+      \textit{r} $\leftarrow$ clone path \textit{a} with \textit{c} appended \textit{s} times
+      
+      \eIf{length \textit{r} > \textit{numMark} - 1}{
+      	push \textit{r} to \textit{complete}
+      }{
+      	push \textit{r} to \textit{frontier}
+      }
+   }
+}
+
+sort \textit{complete} by desc. length
+
+\Return{shift \textit{complete}}
+
+
+}
+\caption{A* search upon a chromosome of pre-initialised multi-layer network graph, with founder groups represented as colours. Sort operations apply in-place, and shift operations truncate from the head of an array.}
+\end{algorithm}

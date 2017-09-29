@@ -1,0 +1,15 @@
+\abstract{\textbf{Motivation:}\
+Haplotype reconstruction remains an important tool for determining the precise path of descent undertaken by a trait locus as it co-segregates with neighbouring markers. The resulting analysis outlines the phased genotypes that comprise said locus across affected individuals within a multiple family setting, and is instrumental in facilitating the search of sequence-analysis driven studies by providing a Mendelian context in which to narrow a region of interest.\
+Previously, only autosomal penetrance models could be determined via popular haplotype analysis programs such as \hpainter, where haploblocks reconstructed on the X chromosome produced inconsistent recombination artefacts. Here, we describe \haplo, a novel in-browser web application that performs haplotype reconstruction for all autosomal and X-linked penetrance models by harnessing the capabilities of an A* best-first search algorithm. \haplo also performs haplotype visualization for prior haplotype analyses from popular linkage programs such as Allegro, Simwalk, Genehunter, and Merlin. The application was written explicitly for web browsers in order to ensure fast uptake and portability, and encompasses complete pedigree creation utilities ported to the web in order to appropriate the advanced features emerging from the new HTML5 specification.\\\
+\
+\textbf{Results:} We implement our approach with an initial pass to set possible founder allele groups at each marker-locus by traversing down through the pedigree in trios. The A* search algorithm then performs a walk-through of the founder allele groups under the heuristic of minimizing the number of crossovers between adjacent markers. In addition to several autosomal pedigrees, \haplo correctly resolved complex pedigrees of X-linked and consanguineous inheritance.\\
+\
+\textbf{Availability:} \haplo is licensed under GPLv3 and is hosted and maintained via Bitbucket.\\\
+\
+\textit{Web Application:}\ \ \url|http://mtekman.bitbucket.io/haplo_html5|\\\
+\
+\textit{Source Code:}\ \ \url|https://www.bitbucket.io/mtekman/haplo_html5|\\
+\
+\textbf{Supplementary information:} Supplementary data is available from \textit{Bioinformatics} online.\\
+\textbf{Contact:} \href{m.tekman@ucl.ac.uk}{m.tekman@ucl.ac.uk} or \href{h.stanescu@ucl.ac.uk}{h.stanescu@ucl.ac.uk}\
+}

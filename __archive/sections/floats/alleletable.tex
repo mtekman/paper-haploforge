@@ -1,0 +1,54 @@
+
+%% Valid allele configuration table
+
+\begin{table}[!b]
+\processtable{Trio allele configurations, with applicable Mendelian child genotypes describing four levels of inheritance ambiguity.\label{table:modes}}
+{\begin{tabular}{| *2c | *4c |} \hline %\toprule
+
+  \multicolumn{2}{|c|}{\emph{Parental Alleles}}
+& \multicolumn{4}{c|}{\emph{Child Alleles}}  \\
+
+
+\emph{Case} & \emph{GTs} & \emph{Mend.} & \emph{AS} & \emph{PS} & \emph{Group}\\
+\hline
+% A multirow would be more benefial here
+% but let's keep package req down for now
+                   & AA | AA &   AA   & $\times\times$         & $\times\times$         & Orphaned \\
+Homozygous         & BB | BB &   BB   & $\times\times$         & $\times\times$         & Orphaned \\
+                   & AA | BB &   AB   & $\times\times$         & $\checkmark\checkmark$ & Bound-Parent\\
+\hline
+                   &         &   AA   & $\checkmark\checkmark$ & $\times\times$         & Bound-Allele\\
+Heterozygous       & AB | AB &   BB   & $\checkmark\checkmark$ & $\times\times$         & Bound-Allele\\
+                   &         &   AB   & $\checkmark\checkmark$ & $\times\times$         & Bound-Allele\\
+\hline
+                   & AA | AB &   AA   & $\times\times$         & $\times\times$         & Orphaned\\
+Homozygous with    &         &   AB   & $\times\checkmark$     & $\times\checkmark$     & Locked\\
+   Heterozygous    & BB | AB &   BB   & $\times\times$         & $\times\times$         & Orphaned\\
+                   &         &   AB   & $\checkmark\times$     & $\checkmark\times$     & Locked\\
+\hline
+%\botrule
+\end{tabular}}
+{An allele is Allele-Specific (AS) if it can unambiguously match a specific allele from a given parent, and Parent-Specific (PS) if a specific parent can be matched. A function of these two parameters determines the group to describe the level of ambiguity of the configuration, in rising order of: Locked, Bound-Parent, Bound-Allele, and Orphaned. Ticks and crosses indicate whether the child allele at the corresponding index conforms to these parameters.}
+\end{table}
+
+
+%\begin{table}[!b]
+%\processtable{Trio allele configurations, with applicable Mendelian (M) and non-applicable Mendelian (Non-M) genotypes describing all three cases of inheritance ambiguity.\label{table:modes}}{\begin{tabular}{ *8c } \toprule
+%\multicolumn{2}{c}{\emph{Parental Alleles}} & \multicolumn{2}{c}{\emph{Child Alleles}} &  \\
+%\emph{Case} & \emph{GTs} & \emph{M} & \emph{Non-M} & \emph{AS} & \emph{PS} & \emph{Group} \\
+%\midrule
+%            & AA | AA & AA & AB or BB & $\times\times$ & $\times\times$ & Orphaned \\
+%Homozygous  & BB | BB & BB & AB or AA & $\times\times$ & $\times\times$ & Orphaned \\
+%            & AA | BB & AB & AA or BB & $\times\times$ & $\checkmark\checkmark$ & Bound-Parent\\
+%\hline
+%                &         & AA &    & $\checkmark\checkmark$ & $\times\times$ & Bound-Allele\\
+%Heterozygous    & AB | AB & BB & -  & $\checkmark\checkmark$ & $\times\times$ & Bound-Allele\\
+%                &         & AB &    & $\checkmark\checkmark$ & $\times\times$ & Bound-Allele\\
+%\hline
+%Homozygous with    & AA | AB & AA & BB & $\times\times$ & $\times\times$ & Orphaned\\
+%     Heterozygous  &         & AB &    & $\times\checkmark$ & $\times\checkmark$ & Locked\\
+%                   & BB | AB & BB & AA & $\times\times$ & $\times\times$ & Orphaned\\
+%                   &         & AB &    & $\checkmark\times$ & $\checkmark\times$ & Locked\\
+%\botrule
+%\end{tabular}}{A particular valid configuration is Allele-Specific (AS) if it can unambiguously match a specific allele from a given parent, and the configuration is said to be Parental-Specific (PS) if a specific parent can be matched. A function of these two parameters determines the group to describe the level of ambiguity of the configuration, in rising order of: Locked, Bound-Parent, Bound-Allele, and Orphaned.}
+%\end{table}

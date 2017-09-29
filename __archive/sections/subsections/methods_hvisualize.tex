@@ -1,0 +1,55 @@
+
+\subsection{Haplotype Visualization}
+
+In addition to native haplotype reconstruction, \haplo accepts prior reconstruction performed from external linkage and haplotyping programs such as Allegro, Simwalk, Merlin, and Genehunter. Haploblocks are rendered to canvas using the KineticJS framework \citep{kineticjs}, a minimal 2D graphics Javascript library for handling Canvas operations and providing crucial support to the visual comparative analysis components of the application.
+
+\subsubsection{File support}
+
+Primary input requires only haplotypes to perform a standalone reconstruction through native processing. \haplo accomodates for the variation in file formats by appropriating supplementary gene flow data that is provided either additionally or within the main haplotypes input file.
+
+Where Merlin \citep{merlin} encodes founder groups directly, Allegro and Simwalk \citep{allegro,simwalk} encode descent data as a binary graph that compacts two generations of gene flow into a single decimal pair, where for child alleles $C$ inheriting from paternal alleles $P$ and maternal alleles $M$:
+
+\begin{equation}
+C_A \mapsto \{P_A,M_A\}
+\end{equation}\
+\
+where:\
+\begin{equation}
+A \in \{1,2\} := 
+    \begin{cases}
+      1 \mapsto \text{paternal allele}, &\\
+      2 \mapsto \text{maternal allele}, &\\
+    \end{cases}
+\end{equation}
+
+%[XXX mention genehunter vectors...?]
+
+Further input from marker data (e.g. SNP ID, genetic distance (cM)) are displayed upon discovery, and are preserved across successive sessions in local storage. 
+
+Haplotype inputs from GeneHunter and Merlin do not include gender data, requiring sex to be inferred through parentage for all but the last generation who are declared as 'unknowns' due to their lack of offspring. Supplementary pedigree input data can be provided by the user to bypass this measure.
+
+
+\subsubsection{Comparative Inspection}
+
+The comparison of haplotypes is initiated upon the subselection of individuals for analysis. Affected or unaffected individuals can be compared from multiple families due to founder group assignment being globalized across pedigrees. Selected individuals are aligned vertically within family groups to allow for side-by-side comparison of haplotypes. Individuals with some degree of relation can be optionally offset with conjoining relationship lines indicating their \textit{degree-of-separation} as shown in Fig~\ref{fig:scroll}.
+
+Haplotypes can be inspected by scrolling the current view via mouse wheel or keyboard input, as well as by dragging the region indicator displayed in the chromosome scale that details the size of the region by marker-span and genetic distance interval. The size of the view itself can be expanded/contracted by manipulating the handles that flank the region indicator, and precise evaluation can be further specified by direct marker search for a region of interest; either through the use of a drop-down autocompletion box as shown in Fig~\ref{fig:scroll}, or by automatically scrolling to points of recombination via additional buttons.
+
+%\placeholderimage{fig:dos}{DOS:<Placeholder for now>}
+\fig{fig:scroll}{assets/images/screens/dos_scroller_marker2.png}
+	{Compact screenshot of the Haplotypes Comparison View, presenting: (Left) marker names and genetic positions; (Top-Centre) four individuals subselected from a larger pedigree with a degree-of-separation between 76521+76611 and 7+8 of 3 generations; (Centre) haplotypes and coloured haploblocks for the selected individuals, with two recombinations being shown in individual 7 at flanking markers rs9392005-rs626080 on separate alleles; (Top-Right) context-dependent buttons; (Centre-Right) floating region indicator with the top handle at rs6923735 and the bottom handle at rs6926616 depicting a view that spans 27 markers and 2.469 cM; (Bottom-Right) marker search window with drop-down autocompletion in process.}
+
+\subsubsection{Comparative Analysis}
+
+The visualization of haplotypes is prompted by researchers looking for further analysis to narrow a region of interest by looking for regions of exclusivity between affected individuals that is also not present in unaffecteds.
+
+  E.g. Under a dominant trait model for a given locus of interest, if two affecteds fall within haploblock group designations of  $\{red,red\}, \{red,green\}$ (respectively) and an unaffected falls within $\{green,green\}$, then by singular inspection the founder allele of interest is $red$. A consanguineous recessive trait model would fail in this case by the assertion that both alleles must match.
+
+This binary assessment between differently affected individuals can often be too blunt a tool in finding these regions due to the insistence that all data presented by the genotypes is completely correct; potentially excluding promising regions due to the limited presence of mistyped markers. 
+
+\haplo takes on a more analogue score-based approach which plots exclusivity as a function of the total accordance between individuals. Affected members contribute different scores based on the similarity with other affecteds and their dissimilarity with unaffecteds. Scores are assessed on the principle that affected members in a pedigree with matching genotypes within the same founder group contribute to a local score for that marker locus based upon whether the mode of comparison is either homozygous or heterozygous. Local scores are then tallied across all pedigrees to contribute to the total score for that marker in the plot.
+
+
+The region indicator is then overlayed with this plot to facilitate quick scrolling to regions with higher scores, and more explicit assessment of these scores can be determined by the exporting them to a new browser-tab as a plain-text table for ready spreadsheet import.
+
+%\pagebreak

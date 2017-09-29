@@ -1,0 +1,11 @@
+
+                 | Web |   Desktop   |   FOSS  |  Does Haplo?  |  Last updated  |   notes
+                 ===============================================================================
+Cranefoot        |  ?  |     Y       |    Y    |       Y       |      2014      |  config files do not work, pedigree creation is text intensive
+Cryllic3         |  n  |    Win      |    n    |       Y       |      2011      |  haplo not tested
+Kinship          |  n  |   R-package |    Y    |       n       |       ?        |
+MadelinePDE      |  n  |    CLI      |    Y    |       n       |       ?        |
+PED6             |  n  |   Win/Mac   |    n    |       n       |      2013      |
+PedHunter        |  n  |    Lnx      |    Y    |       n       |       ?        | NCBI basic tool
+PedGraph         |  n  |    Win      |    n    |       n       |       ?        |
+Pedigree/Draw    |  ?  |     ?       |    n    |       n       |      2015      | <- need  to verify

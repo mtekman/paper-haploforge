@@ -1,0 +1,46 @@
+\section{Discussion}
+
+\subsection{Path-finding approach}
+
+The A* search is not restricted to allele pairs nor biallelic markers (SNPs), since the path-finding approach processes each chromosome separately with the only interaction between homologs being subject to the parental exclusion groups that are passed on from the last chromosome processed. This makes the approach inclusive of common polymorphic markers (VNTRs and STRs) as well as providing an advantageous theoretical backbone to explore monosomy, trisomy, and tetrasomy cases.
+
+The parental exclusion parameters carried across homologous chromosomes may appear to hinder the analysis of consanguineous pedigrees where the same founder allele group may appear in multiple sets due to the non-singular path of descent that the group may take to reach an individual. This is trivially resolved however, as consanguinity is bound to the parental Mateline and a cursory step will slacken the exclusion constrains by intersecting all homologous sets in order to find and remove any overlapping groups.
+
+Another conceivably useful feature of the approach is the flexibility in which it infers parental alleles whilst never explicitly assuming a maternal or paternal allele based on ordering, but testing for compatibility with the child alleles across all orientations and leaving the resolution to the path-finding process. Though the current \haplo release (v1.51) requires phased genotypes as input, the potential to resolve unphased genotypes exists as a possibility.
+
+
+\subsection{Reconstruction Accuracy}
+
+The haplotype reconstruction performed by \haplo was compared against that of \hpainter, with the same points of recombination being determined for all autosomal pedigrees given from main analysis sources; Allegro (ihaplo.out), GeneHunter (haplo.chr), Merlin (merlin.chr), and Simwalk (HEF.ALL).
+
+Beyond the elementary pedigree types, \haplo correctly resolved four non-trivial families: Autosomal dominant (27 members, 23-bit); a highly consanguineous Autosomal recessive (24 members, 29-bit); and an X-linked dominant (17 members, 15-bit).
+
+For the X-linked pedigree, \haplo produced valid Mendelian descent for the analysis whilst \hpainter generated recombination artefacts shown in Fig~\ref{fig:hpainterX}, where the last generation of individuals (particularly 206130, 206121, 206117) appear to undergo multiple questionable crossover events within a genetic distance interval of less than 1 cM. An expanded view of the same pedigree is shown in Fig~\ref{fig:xcomp} via side-by-side comparison, where \haplo does not produce any of the recombination artefacts that \hpainter produced for the same analysis.
+
+\fig{fig:hpainterX}{assets/images/hpainter_inheritance_small.png}
+	{HaploPainter interpretation of a five marker X-linked analysis, with founder groups indicated by unique coloured blocks. Arrows are overlayed to show the true flow of genetic data based on genotypes, with green indicating inconsistent colouring between successive meioses and red depicting erroneous inheritance.
+}
+
+
+\fig{fig:xcomp}{assets/images/x_compare.jpg}
+	{A comparison of the X-linked dominant pedigree showing a mid-region of chrX spanning 72 markers.
+(Top) \hpainter with output modified only for horizontally alignment, and (Bottom) \haplo showing all members via default Comparison View.}
+
+
+\subsection{Performance}
+
+The WebGL initiative provides hardware-accelerated graphics to browsers via the HTML5 canvas component which can be rendered to via the Canvas or (2D) WebGL APIs \citep{whatwgliving}, and it is the former that drives the KineticJS library that comprises the core graphics backbone of the application.
+
+KineticJS renders graphics to 'layers' which are implemented as separate canvas elements superimposed upon one another. Layers simplify the drawing process of separable groups of graphics such that groups that pertain to different layers can be redrawn individually, with the caveat that too many layers may encumber the graphics device. \haplo uses only two layers for passive and active drawing, with graphics being transferred between the two as necessary to save on redraw operations. The main graphical bottleneck of the application stems from the use of rich tiling animations upon pedigree initialisation as well as tweening animations that seamlessly transition from one view to the next.
+
+\haplo runs well in its main hardware-accelerated state, even on low-end portable devices, but performance variation is apparent between browsers with different layout and Javascript engines. Webkit-based browsers (Chromium/Safari) utilize a multi-process approach paired with whole-method JIT compiling (V8/Nitro) which appears to lend a noticeable performance increase over multi-threaded engines such as Gecko (Firefox) that performs tracing JIT compiling (SpiderMonkey) by design (\citeauthor{v8,spidermonkey}). 
+
+CanvasAPI-dependent libraries have the safety of a software-accelerated fallback should the graphics device become unavailable, and sudden slow transitioning and unresponsive input during \haplo operation can be attributed to this fallback mode. The advanced tiling and transition animations can be disabled by the user at any time during general operation to greatly ease the burden upon the CPU.
+
+High-level language frameworks that abstract the WebGL API will only increase in performance and stability over time as Javascript engines become more optimized at interacting with the GPU. The performance lapse in Gecko-based browsers in comparison to Webkit browsers has already been addressed by Mozilla with their Electrolysis development branch that already incorporates a multi-process model \citep{firemulti}. Future support for \haplo is guaranteed in this regard, with the further advantage of web-based applications being able to run in a (browser) environment that exists by default on the end-user's machine, with the import of additional libraries and frameworks being loaded seamlessly in user-space without having to inconvenience the user or interfere with the system.
+
+
+
+\subsection{Privacy}
+
+\haplo currently operates in-browser via either local or web deployment, and analyses are restricted to a single user. In the interests of scientific collaboration, it is likely that the end-user would want to share their analysis with another working on the same project. Due to the sensitivities of patient data as well as the possibility of identifying individuals based on pedigree structure alone, the application was designed with the intention of not having any server-side operations and running purely \textit{in situ} on the client's browser. The discretion of patient data is ultimately left to the user, and analyses have the option to strip patient names and other annotations upon export.

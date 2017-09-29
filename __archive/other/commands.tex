@@ -1,0 +1,18 @@
+%Fig at top or bottom
+\newcommand{\fig}[3]{\
+\begin{figure}[!tpb]
+	\centerline{\includegraphics[width=\columnwidth]{#2}}\caption{#3}\label{#1}
+\end{figure}
+}
+
+%Fig at bottom
+\newcommand{\figbottom}[3]{\
+\begin{figure}[!b]
+	\centerline{\includegraphics[width=\columnwidth]{#2}}\caption{#3}\label{#1}
+\end{figure}
+}
+
+%Fig placeholder
+\newcommand{\placeholderimage}[2]{\begin{figure}[!tpb]
+\fboxsep=0pt\colorbox{gray}{\begin{minipage}[t]{235pt} \vbox to 180pt{\vfill\hbox to 235pt{\hfill\fontsize{24pt}{24pt}\selectfont [IMG]\hfill}\vfill}\end{minipage}}\caption{#2}\label{#1}
+\end{figure}}

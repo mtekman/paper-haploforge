@@ -1,0 +1,60 @@
+
+\subsection{Haplotype Reconstruction}
+
+The reconstruction process is split into three sequential modes of operation that primes the network graph, determines the optimal path, and performs the necessary cleanup operations.
+
+\subsubsection{First Pass}
+
+% Allele config table
+\input{sections/floats/alleletable}
+
+We initialise our network of nodes with a top-down pass of each pedigree to set founder allele groups for each founder, and create a set of inheritable groups for each non-founder parent-offspring trio marker locus. Founder groups are inherited in a non-parental specific fashion where any valid genotype configuration would contribute to the set under a pre-set disease model. This is to ensure that consanguineous pedigrees are permitted by making no assumptions upon whether a parental allele is maternal or paternal.
+
+The complexity in resolving parental alleles with child alleles can be summarized by four tiers of allele-pair specificity (in ascending order of complexity): Locked, Bound-Parent, Bound-Allele, and Orphaned. Locked alleles can match at least one allele to a specific parent and to a specific allele within that parent. Bound-Parent alleles can match each allele to a parent, but not to a specific allele within that parent. Bound-Allele is the opposite; where each allele matches one in either parent, but neither allele is parent-specific. Orphaned provides no specificity whatsoever. 
+
+A summary of valid genotype configurations and their specificity is outlined in Table~\ref{table:modes}.
+
+Depending upon the disease penetrance model, the valid parent-offspring child allele configurations are given as follows:
+
+\begin{equation}
+\begin{split}
+\{p_1,p_2\} \times \{m_1,m_2\} := \{\{p_1,m_1\},\{p_2,m_2\},\\\{p_1,m_2\},\{p_2,m_1\}\}
+\end{split}
+\end{equation}\
+%\vspace{-5pt}\
+(Autosomal)\
+\
+\begin{equation}
+\{x_1\} \times \{x_2,x_3\} :=
+\begin{cases}
+  \{\{x_2\},\{x_3\}\},& \text{if Male}\\
+  \{\{x_1,x_2\},\{x_1,x_3\}\},& \text{if Female}
+\end{cases}
+\end{equation}\
+%\vspace{-5pt}\
+(X-linked)
+\vspace{5pt}
+
+Males are represented as a single allele due to hemizygosity, but genotyping chipsets typically present a homozygous genotype.
+
+\subsubsection{Second Pass}
+
+A parental exclusion group is determined for non-founders based upon the set of previously-derived parental founder groups.
+
+The A* path-finding algorithm then crawls through each individual-marker layer of networked nodes, as outlined in Algorithm~\ref{alg:astar}. Under the representation visualized in Fig~\ref{fig:pathfind}, the algorithm operates under the heuristic of maximising a contiguous stretch of a given colour group under the guise of minimizing the total number of crossover events across the chromosome in question.
+
+
+% Pseudocode
+\input{sections/floats/pseudo}
+
+Allowed paths are limited to the founder groups connecting one marker-layer to the next as populated by the first pass, and are further constrained by a parental exclusion set that forbids transitions to certain founder groups under the assertion that said groups must only exist within the alternate homolog.
+
+A working set of eight examined paths are expanded upon with paths added/removed as determined by their respective running totals upon each iteration of the working set. In order to prevent the working set from being too homologous, paths with the same running total are not counted more than once in order to encourage more variety within the working set. 
+
+The optimal path is chosen out of the working set with the minimum number of crossovers, and a set of the founder groups within is used for parental exclusion upon evaluation of offspring chromosomes. 
+
+\subsubsection{Third Pass}
+
+It may be required for the search algorithm to run more than once upon the same chromosome under an alternate set of parental exclusion groups, should a valid path not be found in the first attempt.
+
+Upon full evaluation of a pedigree, the network graphs associated with each marker locus are discarded and the optimal paths are compactly stored in replacement.

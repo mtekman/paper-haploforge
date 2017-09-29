@@ -1,0 +1,17 @@
+
+\subsection{Pedigree Creation}
+
+In order to be a fully comprehensive pedigree suite, creation tools are available to address the more clinical aspects of the application.
+
+Pedigrees are compliant with the Pedigree Standardization Work Group (PSWG) specification \citep{pswg1,pswg2} familiar to most clinicians, and provides a ready means to record sensitive patient data through member-specific annotations. 
+
+Creation utilities are localised to two intuitive modes of drawing relationships; where lines are drawn from one individual to another in order to indicate heterosexual partnership via \textit{Matelines}, or from one individual to a Mateline in order to indicate a parent-offspring trio via \textit{Childlines}. Lines snap to context-dependent anchor points that become visible as soon as the drawing of a line is initialised as shown in Fig~\ref{fig:pedcreate}. Connected individuals anchored on the same line are vertically aligned to one another such that both members of a Mateline move as a single unit, as well as siblings bound to the same line via their respective Childlines.
+
+Projects are not limited to single families, and complex consanguineous relationships are automatically detected and represented via double-lines. Pedigrees can be imported/exported via the standard LINKAGE (pre-makeped) format, or saved and resumed from local browser storage for ongoing projects.
+
+\fig{fig:pedcreate}{assets/images/pedcreate.png}
+	{PedCreate View displaying the four stages of creating a pedigree: (1) Adding individuals and modifying their properties, (2) Joining mates through a Mateline with anchor points made visible within red circles, (3) Joining offspring to their parents through a Childline with anchor points made visible with white circles, (4) Completing a trio.}
+
+
+% Pre-makeped
+% http://www.helsinki.fi/~tsjuntun/autogscan/pedigreefile.html

@@ -1,0 +1,44 @@
+
+% Pseudocode
+\begin{algorithm}[!t]
+\label{alg:astar}
+\SetLine\
+
+\Begin{
+
+\textit{X} $\leftarrow$ parental exclusion set of illegal founder-alleles
+
+\textit{frontier} $\leftarrow$ set of active paths, initialized to first haplogroup
+
+\textit{complete} $\leftarrow$ set of completed paths, initialized as empty
+
+\While{frontier > 0}{
+
+   \textit{p} $\leftarrow$ first path in \textit{frontier}
+   
+   \textit{F} $\leftarrow$ set of founder-alleles at marker locus \textit{\textnormal{size}(p)+1} 
+     
+   \For{f $\in$ F}{
+           
+      \textit{s} $\leftarrow$ perform lookahead and count contiguous stretch of \textit{f}
+      
+      \If{(s > \textit{minStretch}) \textnormal{and} (f $\notin$ X)}{
+          \textit{e} $\leftarrow$ extend path \textit{p} by length \textit{s} with founder-allele \textit{f}
+      
+	      \eIf{\textnormal{size}(e) > \textnormal{size}(markers)}{
+    	  	push \textit{e} to \textit{complete}
+	      }{
+    	  	push \textit{e} to \textit{frontier}
+	      }      
+      }
+   }
+   sort \textit{frontier} by desc. length and truncate up to \textit{maxNumPaths}
+}
+sort \textit{complete} by desc. number of recombinations
+
+\Return{\textnormal{first path in} \textit{complete}}
+
+
+}
+\caption{A* search upon a single chromosome pre-initialised with a set of potential founder-alleles at each marker locus.}
+\end{algorithm}

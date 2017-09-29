@@ -1,0 +1,55 @@
+> 
+> Here are the comments of the reviewers:
+> 
+> ----------------------------------------
+> Reviewer: 1
+> 
+> Comments to the Author
+> Tekman et al. in their manuscript entitled “HaploForge: A comprehensive pedigree drawing and haplotype visualization web application” present a web application to visualize haplotypes and draw pedigrees, that allows for both autosomal and X-linked haplotypes from outbred and consanguineous pedigrees.  The application colors IBD segments and processes output from commonly used linkage analysis packages. 
+> 1.       The authors compare their newly developed tool to a visualization program developed back in 2005 (HaploPainter); however, newer tools have been developed such as Family Genome Browser (Bioinformatics, 2015, 31:2262-2268), which also provides “comprehensive” tools for analysis and visualization of pedigree and variant data, including parent of origin, potential recombination events, IBD, LD, annotations for the variants, etc .  The Family Genome Browser can be accessed via the web or installed locally.  What features does HaploForge possess that are not possessed by newer tools such as the Family Genome Browser?
+
+The desktop deployment of their utility appears to be a Java desktop wrapper of their web-based editions (as inferred by cloning their source), and dead links to their desktop binaries could not prove otherwise. 
+
+The family genome browser does not appear to support LINKAGE or LINKAGE-like  formats output by common haplotyping tools such as Merlin, Allegro, Genehunter, Simwalk.
+Uploading the haplotype output file (containing data, and pedigree) appeared to have no effect, as did pasting the data into the pedigree field.
+
+Though unable to test, the parent of origin feature in the paper appears to simply highlight the founder of a given variant. The IBD data that HaploForge utilizes and determines represents this 'parent-of-origin' implicitly by assigning founder alleles their own distinct colouring, so that the origin of a given variant can be automatically inferred by the allele block colouring originating from the founder.
+
+Potential recombination events are not analizted. IBD is used extensively. LD is not used as the analysis is not variant-focused but rather haploblock focused (apply LD on a given block?) Attempting to apply LD data is costly and would require server-side operation which would break the in-situ nature of the client-side analysis.
+
+HaploForge makes use of identity mapping scoring to assist in the pedigree analysis which does not appear to be shared in other analysis suites.
+
+
+> 2.      The authors state that their application can “navigate high numbers of markers” and “non-trivial families” (e.g., 27 members).  Are there limits to the number of markers or pedigree members that can be explored?   For example, can whole genome sequence data be explored?  Is it possible to analyze pedigrees with hundreds of members?
+
+Elston-Stuart derived algorithms scale linearly with number of members, and exponentially with number of markers. Lander-Green derived algorithms scale linearly with number of markers, and exponentially with number of members.
+
+Commonly-used haplotype analysis programs attempt to be LG based, and split pedigrees based if they exceed 23-bits of complexity as derived from the `2n -f -g` equation. Large marker based analyses are only possible on small pedigrees (larger than trios to be informative), and the time complexity scales exponentially to perform the analysis. The largest pedigree we ever performed had 29-bits at 40,000 markers -- 16,000 of which were in chromosome1, which was indeed resolved correctly by the analysis. 
+
+Generating haplotypes based on 1000Genomes data is plausible, but wasted energy since the though there does seem to be pedigree data within the sample populations, the maximum number of members in a given family appears to be 6, and these all appear to be trios.
+
+The best we can do is the full output of the largest genotypgin chipset (1.8M) on a small pedigree (for complexity) and see if that resolves.
+
+Hundreds of members though extremely possible, is impractical due to having to simulate a complex family tree should the pedigree span more than a few generations. If the pedigree consists more of non-founders than founders, this should indeed be very possible.
+
+TODO: Linkage analysis on a small trio
+TODO: Linkage analysis on a very large complex pedigree with a few purposefully crafted markers. 
+
+
+> 3.      HaploForge colors IBD information on the pedigree.  It is not clear how HaploForge uses the linkage segregation information to determine haplotypes/IBD versus the A* search algorithm.
+
+Haplotypes work under the principle of determining which founder allele a given non-founder allele stems from, and aligning founder alleles of the same designation to share the same chromosome homolog. Linkage segregation data prints founder allele designations along with the output phased genotypes which can then be used to colour them approrpiately. The A* search algorithm determines these groups on its own by tracing the allele up through the pedigree.
+
+If the question is, how are LOD scores used in the analysis, then the answer is they are not. Linkage programs often support haplotype processing in conjunction with their analysis, the linkage itself is not needed.
+
+> 
+> 
+> Reviewer: 2
+> 
+> Comments to the Author
+> Tekman et al present a novel program to analyze and visualize the flow of genetic information through a family. The two main aims of this new application are 1) greater accuracy to determine flow of alleles in the family compared with HaploPainter and 2) improved clarity of the representation of these haplotypes, eg by allowing side-by-side comparison of multiple family members across a pedigree. Although I lack the expertise to critically appraise the extent to which the first aim is achieved, the example using X chromosomal haplotypes suggests that HaploForge does represent a significant improvement compared with Haplopainter. The second aim is substantially achieved by this application and I conclude that HaploForge will be valuable to researchers and geneticists analyzing family trees, especially for the purposes of conducting linkage studies.
+> 
+> Minor points:
+> 1. The extent to which this application is useful in pedigrees being studied using whole genome or whole exome sequencing is less apparent, and discussion of this issue would be helpful, given that, especially in a research context linkage analysis is arguably less critical than it was in the pre-Next Generation Sequencing era.
+> 2. The authors state that that "there are many programs available for visualization" but they only compare HaploForge with HaploPainter. This is justified by the fact that HaploPainter is the most widely cited example, but brief descriptions of other available programs would help to provide more context for HapoForge.
+> 3. Can HaploForge facilitate identification of extended haplotypes that are identical-by-state across different families (suggesting evidence of a founder effect among families not known to be related to each other)?

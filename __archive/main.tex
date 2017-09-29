@@ -1,0 +1,55 @@
+\documentclass{assets/biotemplate/bioinfo}
+
+\copyrightyear{2016} \pubyear{2016}
+\access{Advance Access Publication Date: XXX XXX XXXX}
+\appnotes{XXXXXXXXXXXX}
+
+%provided
+\usepackage{assets/biotemplate/url}
+\usepackage{assets/biotemplate/algorithm2e}
+
+% Numbering in eqns
+\numberwithin{equation}{section}
+
+% Filler
+\usepackage{lipsum}
+\def\lips{{\it\lipsum[1]}}
+
+% App defns
+\def\haplo{{\sc HaploHTML5}\ }
+\def\hpainter{{\sc HaploPainter}\ }
+
+\input{other/commands}
+
+\begin{document}
+
+\firstpage{1}
+
+\subtitle{Subject Section XXXX}
+
+\title[HaploHTML5]{HaploHTML5: A Comprehensive Pedigree Creation and Haplotype Reconstruction Suite}
+\author[Sample \textit{et~al}.]{Mehmet Tekman\,$^{\text{\sfb 1}*}$, Alan Medlar\,$^{\text{\sfb 2}}$, Monika Mozere\,$^{\text{\sfb 1}}$, Robert Kleta\,$^{\text{\sfb 1}}$, and Horia Stanescu\,$^{\text{\sfb 1}}$}
+\address{$^{\text{\sf 1}}$Division of Medicine, University College London,  London,  NW3 2PF, UK and \\
+$^{\text{\sf 2}}$Institute of Biotechnology, University of Helsinki, Helsinki, 00014, Finland.}
+
+\corresp{$^\ast$To whom correspondence should be addressed.}
+
+\history{Received on XXXXX; revised on XXXXX; accepted on XXXXX}
+
+\editor{Associate Editor: XXXXXXX}
+
+\include{other/abstract}
+
+\maketitle
+
+\input{sections/introduction}
+\input{sections/approach}
+\input{sections/methods}
+\input{sections/discussion}
+\input{sections/conclusion}
+\input{sections/jabber}
+
+\input{other/bibliography}
+
+
+\end{document}

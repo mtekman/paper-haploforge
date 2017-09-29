@@ -1,0 +1,24 @@
+
+\section{Approach}
+
+Our approach performs haplotype reconstruction by converting the task of resolving uncertain haplotypes in a chromosome into a path-finding problem, and performing an A* best-first search upon each.
+
+\subsection{A* Best-First}
+
+\figbottom{fig:pathfind}{assets/images/path_finder.png}
+	{(Top) A multi-layer network graph depicting five founder alleles as uniquely coloured nodes within a marker locus stretching from $m_i$ to $m_{i+5}$. Black arrows depict desired contiguous founder group stretches, and grey arrows indicate recombinations from one founder group to another. (Bottom) Six possible routes explored by the search algorithm, with contiguous stretches being rewarded $+1$ to the total path sum. The first route has the largest path sum of 4 and is the most optimal path in the region under consideration.}
+
+The A* ("A-star") search algorithm is an efficient path-finding algorithm routinely employed in real-time mapping applications due to its efficiency and accuracy \citep{stout1996smart,seet2004star}. In a given connected graph of nodes and weighted edges, an optimal path from a start node to a target node is traversed with the aim of incurring a minimal edge-cost. 
+
+All nodes need not be considered by expanding upon only a "frontier" of paths for which the search algorithm has deemed most likely to reach the target node. The search is admissable on the condition that the estimate to the target node does not over-breach the true cost of that active path \citep{astar}, under the following heuristic:
+
+\begin{equation}
+f(n) = g(n) + h(n)
+\end{equation}
+where for the last node $n$ on the current path, $g(n)$ is the cumulative cost of the path so far, and $h(n)$ is the heuristic that estimates the cost of the smallest path to the target node.
+
+In a genomic context this can be visualised as a multi-layer network graph, where nodes within a given layer can only traverse to nodes in the successive layer. Each layer represents an individual-marker locus, and each node a distinct founder allele as shown in Fig~\ref{fig:pathfind}.
+
+The algorithm then traverses from one end of a chromosome to another under the heuristic of minimizing the total number of crossover events.
+
+A maximum of $2f$ nodes are possible in a given layer for $f$ founders in a pedigree, though this number is often greatly restricted due to the manner in which the graph is constructed as outlined in the Methods.

@@ -1,0 +1,42 @@
+
+\section{Introduction}
+
+%\enlargethispage{5pt}
+Mendelian phenotypic traits are transmitted from one generation to the next through the flow of their associated genotypes following known models of inheritance. For each maternal and paternal chromosome pair, alleles are randomly assorted between sister homologs to then be inherited by offspring as separate parental alleles as a result of chromosomal crossover (recombination) events during meiosis. Offspring are then said to be recombinant if by consequence these events reflect in the genotypes such that child genotypes do not match either of their parents.
+
+%\enlargethispage{3pt}
+\vspace{-1pt}
+The location of these points of recombination are of great interest to researchers wishing to precisely pinpoint a trait locus that co-segregates with a given allele, and genetic linkage studies simulate this mechanism over genotyped pedigrees via stochastic processes. 
+
+In the advent of high-throughput genetics, families are genotyped primarily through the use of DNA beadchips technologies which determine the allele of a target fragment by (mass) hybridisation against fixed probes of known alleles through the use amplification/fragmentation techniques upon short-strand DNA \citep{oliphant2002beadarray}.
+
+%The genotyping process involves the mass amplification/fragmentation of short-strand DNA that makes orientation-specific genotypes difficult to produce such that for two alleles \textit{A} and \textit{B} it would not be possible to localise a genotype of \textit{AB} to a sense or anti-sense strand. Such 
+Genotypes determined by these processes are said to be \textit{unphased} due to the ambiguity in whether an allele is inherited maternally or paternally, and haplotype reconstruction methods aim to resolve this by tracing possible paths of descent through a pedigree which ambiguously inherited alleles might follow over successive meioses without contradicting those more explicitly obtained.
+
+These methods often run within the scope of linkage operations operating under a descent-graph model which estimate LOD scores based on a similar principle \citep{sobel1996descent}, following known penetrance models outlined in Fig ~\ref{fig:descent}.
+
+The result of the haplotyping process produces phased genotypes (or \textit{haplotypes}) which have origins resolved such that a pass over of the same genotype index would comprise a pass over the same chromosome in a given individual.
+
+% IMG -- descent graph 
+\fig{fig:descent}{assets/images/descentgraph_both.png}
+	{Simple three-generation pedigrees with corresponding descent graphs following fully penetrant disease models, with affected individuals presenting the phenotype filled in black and with carriers shaded diagonally. Dominant disease models would treat carriers as affecteds. Arrows depict the flow of genetic material through successive meiosis, where (a) follows an autosomal disease model, and (b) follows an X-Linked disease model with the singular X-chromosome in males prompting the trait phenotype due to hemizygosity.}
+
+\vspace{-10pt}
+\subsection{Determining points of Recombination}
+
+\enlargethispage{20pt}
+A known genotype denotes a genetic marker which may or may not co-segregate with another genetic marker. Markers that co-segregate with one another over successive meioses are determined to have a smaller genetic distance between them than markers which do not. For known inter-marker distances, the likelihood of a crossover event occurring within a given A-B locus can be determined by measuring the genetic distance.
+
+%, where two markers on the same chromosome separated by a genetic distance of 100 centiMorgans (approximately the lower-bound size of a chromosome) can expect to undergo a single recombination event. 
+
+Founders are individuals in a pedigree with undeclared parentage that in the context of a pedigree makes each of their alleles unique. Each founder allele is assigned its own founder allele group, and haplotypes of non-founders are resolved into representations of these groups known as \textit{haploblocks} which are delimited by points of recombination. Direct founder descendants split these blocks only once per allele, but for $n$ subsequent generations the haploblocks are split $n$ more times.
+
+The precise size and position of these haploblocks in the last generation are not transparent upon inspection of the haplotype data alone, as genotypes are only resolved to specific chromosomes and the small variation in commonly-used bi-allelic markers (SNPs) produces numerous uncertain haplotypes.\
+
+In the case of small A-B loci, where the founder allele group of the flanking region is the same (as shown in Fig. ~\ref{fig:ablocus} (a)), haploblock resolution is trivial by asserting that a recombination event occurring within a small genetic distance would be improbable and that the uncertain haplotypes within such region would be assigned to the same group as those flanking it. Larger regions would require estimations based upon the expected size of the founder haploblock after $n$ meioses (as shown in Fig. ~\ref{fig:ablocus} (b)) and the variation of haploblock sizes is too large to make an accurate estimation based on recombination frequencies.
+
+The method undertaken by \hpainter takes on a more direct approach and does not base its block resolution on genetic distance but instead performs repeated backtraces upon an uncertain locus to a previous unambiguously resolved one \citep{hpaint,hpaintmanual}. This effectively simplifies the problem outlined in Fig.~\ref{fig:ablocus} by considering only a single flanking unambiguous neighbouring locus, and tests whether the current locus in question either does or does not conform to the same group. This method is limited in the sense that no lookahead is performed and ambiguous regions later in the chromosome depend entirely upon the regions resolved before it, leading to some early optimization pitfalls if an uncertain haplotype is resolved to wrong group.
+
+\figbottom{fig:ablocus}{assets/images/neighbouring.png}{An example locus of interest in a chromosome depicting haplotypes as vertical marks that are assigned founder allele groups A B C or D, with striped marks (U1,U2,U3) representing soon-to-be-resolved uncertain haplotypes. Two scenarios shown with (a) uncertain haplotypes flanked by founder allele group B on both sides, and (b) uncertain haplotypes flanked by founder allele groups B and C on either side.}
+
+In this paper we outline an approach that incorporates both flanking neighbours in its search and aims to resolve haploblocks under a more global context.

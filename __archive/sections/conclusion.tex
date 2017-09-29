@@ -1,0 +1,15 @@
+\section{Conclusion}
+
+\haplo provides a unified environment to create, analyse, and visualize all aspects of a pedigree and their associated haplotype sets. Pedigree creation allows for the conception of multiple large families via intuitive line drawing and node creation mechanisms that are preserved over multiple sessions, which may prove more beneficial to clinicians who acquire patient data in incremental phases.
+
+For researchers, the haplotype reconstruction readily accommodates prior analysis for a variety of input formats but also expediently performs its own background analysis without any noticeable latency. The visualization aspect of the application surpasses single pedigree analysis and provides a clear mode of inspection to compare differently-affected individuals and their haplotypes across multiple families. Additional tools encompass most use-cases spanning from cursory region-of-interest inspection by various locus specifiers, through to further fine analysis where automatic recombination detection and block homology become more conducive.
+
+The underlying A* search proves to be an effective means of haplotype reconstruction with performance that persists across platforms with browsers based upon the same Javascript engines. The asynchronous nature of the language enables disconnected blocks of code to execute independently of one another which, in a genomic context, allows for the parallel evaluation of chromosomes of individuals in the same generation or within different pedigrees. 
+
+The graphics context supplied by the HTML5 schema to browsers via the various the Javascript frameworks enable fast and powerful graphical content on the web, which will persist and only improve as web-based utilities become the more convenient standard for developers. Desktop applications rely on the existence of (or the installation of) additional libraries in order for them to run, which greatly hinders the uptake process of said applications.
+
+KineticJS as a graphics framework was chosen due to its development stability with active development being frozen since 2014 \citep{kinetictar}. Numerous forks have been spawned of since however, and in order for \haplo to benefit from performance speedups additional to those derived from the browser engine optimizations, it will need to migrate to one of the primary alternatives; ConcreteJS, a creation of the original developer who further modularized KineticJS components by eliminating the core scene-graph model of which KineticJS is based upon \citep{concretejs}; KonvaJS, a popular fork which extends features and already hosts many optimizations over the original such as batch draw methods, image caching, and custom event listeners \citep{konvajs}.
+
+
+Future renditions of \haplo will aim to integrate the visualization and creation components better to provide better flexibility in modifying an existing pedigree with haplotype data. Additional features could include SVG export, the option to view more than one locus in a chromosome during haplotype visualization, and NodeJS based back-end operations for batch production of pedigrees in the use of automated pipelines.
+
